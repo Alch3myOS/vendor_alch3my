@@ -25,6 +25,10 @@ PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/etc/init/init.alch3my.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.alch3my.rc
 
+# Cloned app exemption
+PRODUCT_COPY_FILES += \
+    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml
+
 # Private Keys
 ifneq ($(filter OFFICIAL Official official,$(ALCH3MY_BUILD_TYPE)),)
 include vendor/lineage-priv/keys/keys.mk
