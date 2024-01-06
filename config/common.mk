@@ -114,7 +114,7 @@ PRODUCT_COPY_FILES += \
 
 # Enforce privapp-permissions whitelist
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.control_privapp_permissions=enforce
+    ro.control_privapp_permissions?=enforce
 
 # Lineage SDK
 include vendor/alch3my/config/lineage_sdk_common.mk
