@@ -33,6 +33,10 @@ PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/etc/init/init.alch3my.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.alch3my.rc
 
+# BtHelper
+PRODUCT_PACKAGES += \
+    BtHelper
+
 # ColumbusService
 ifneq ($(TARGET_SUPPORTS_QUICK_TAP),false)
 PRODUCT_PACKAGES += \
