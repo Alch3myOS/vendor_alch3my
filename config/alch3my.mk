@@ -1,6 +1,8 @@
 # Alch3myOS packages
 PRODUCT_PACKAGES += \
-    BatteryStatsViewer
+    BatteryStatsViewer \
+    LMOFreeform \
+    LMOFreeformSidebar
 
 # Additional props
 PRODUCT_PRODUCT_PROPERTIES += \
