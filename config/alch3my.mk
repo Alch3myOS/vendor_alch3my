@@ -1,6 +1,7 @@
 # Alch3myOS packages
 PRODUCT_PACKAGES += \
     BatteryStatsViewer \
+    GameSpace \
     LMOFreeform \
     LMOFreeformSidebar
 
