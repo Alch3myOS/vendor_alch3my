@@ -25,6 +25,12 @@ PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
 PRODUCT_COPY_FILES += \
     vendor/alch3my/prebuilt/common/etc/init/init.alch3my.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.alch3my.rc
 
+# ColumbusService
+ifneq ($(TARGET_SUPPORTS_QUICK_TAP),false)
+PRODUCT_PACKAGES += \
+    ColumbusService
+endif
+
 # DeviceAsWebcam
 ifeq ($(TARGET_BUILD_DEVICE_AS_WEBCAM), true)
     PRODUCT_PACKAGES += \
