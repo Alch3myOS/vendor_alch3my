@@ -1044,3 +1044,4 @@ export ANDROID_JAVA_MAX_MEM="20G"
 export JAVA_ARGS="-Xmx8g"
 
 export USE_THINLTO_CACHE=true
+export SKIP_ABI_CHECKS=true
