@@ -94,6 +94,18 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 PRODUCT_PRODUCT_PROPERTIES += \
     audio.safemedia.bypass=1
 
+# PERF_ANIM_OVERRIDE
+PRODUCT_PRODUCT_PROPERTIES += \
+    persist.sys.activity_anim_perf_override=$(PERF_ANIM_OVERRIDE)
+
+ifeq ($(PERF_ANIM_OVERRIDE),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    debug.sf.predict_hwc_composition_strategy=0
+endif
+
+# Other ROM feature flags
+PERF_ANIM_OVERRIDE ?= false
+
 # Private Keys
 ifneq ($(filter OFFICIAL Official official,$(ALCH3MY_BUILD_TYPE)),)
 include vendor/lineage-priv/keys/keys.mk
