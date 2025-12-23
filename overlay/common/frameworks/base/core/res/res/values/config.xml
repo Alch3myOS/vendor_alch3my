@@ -665,4 +665,7 @@
     <string-array name="theming_defaults" translatable="false">
         <item>*|TONAL_SPOT|#63a3ad</item>
     </string-array>
+
+    <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
+    <item name="config_highResTaskSnapshotScale" format="float" type="dimen">0.6</item>
 </resources>
