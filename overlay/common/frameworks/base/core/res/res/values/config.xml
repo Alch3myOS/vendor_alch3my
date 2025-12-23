@@ -672,4 +672,6 @@
     <bool name="config_enableNewAutoSelectNetworkUI">true</bool>
 
     <bool name="config_enableBurnInProtection">true</bool>
+
+    <dimen name="config_viewConfigurationTouchSlop">6dp</dimen>
 </resources>
