@@ -1,3 +1,7 @@
+# Alch3myOS packages
+PRODUCT_PACKAGES += \
+    BatteryStatsViewer
+
 # Additional props
 PRODUCT_PRODUCT_PROPERTIES += \
     dalvik.vm.debug.alloc=0 \
