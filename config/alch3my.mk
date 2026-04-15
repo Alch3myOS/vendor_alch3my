@@ -129,6 +129,7 @@ endif
 
 # Extra packages
 PRODUCT_PACKAGES += \
+    AxQuickLook \
     AxThemeStore \
     GameSpace \
     LMOFreeform \
