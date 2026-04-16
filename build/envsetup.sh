@@ -1,4 +1,4 @@
-CLANG_VERSION=$(${ANDROID_BUILD_TOP}/vendor/lineage/tools/get_clang_version.py)
+CLANG_VERSION=$(${ANDROID_BUILD_TOP}/vendor/alch3my/tools/get_clang_version.py)
 export LLVM_AOSP_PREBUILTS_VERSION="${CLANG_VERSION}"
 
 RUST_VERSION=$(grep 'RustDefaultVersion =' ${ANDROID_BUILD_TOP}/build/soong/rust/config/global.go | awk '{print $3}' | awk -F '"' '{print $2}')
@@ -12,12 +12,12 @@ function check_product()
         echo "Couldn't locate the top of the tree. Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^lineage_") ; then
-        LINEAGE_BUILD=$(echo -n $1 | sed -e 's/^lineage_//g')
+    if (echo -n $1 | grep -q -e "^alch3my_") ; then
+        ALCH3MY_BUILD=$(echo -n $1 | sed -e 's/^alch3my_//g')
     else
-        LINEAGE_BUILD=
+        ALCH3MY_BUILD=
     fi
-    export LINEAGE_BUILD
+    export ALCH3MY_BUILD
 
         TARGET_PRODUCT=$1 \
         TARGET_RELEASE=$2 \
@@ -44,7 +44,7 @@ function breakfast()
 {
     target=$1
     local variant=$2
-    source ${ANDROID_BUILD_TOP}/vendor/lineage/vars/aosp_target_release
+    source ${ANDROID_BUILD_TOP}/vendor/alch3my/vars/aosp_target_release
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
@@ -54,12 +54,12 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the Lineage model name
+            # This is probably just the device codename
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
 
-            lunch lineage_$target-$aosp_target_release-$variant
+            lunch alch3my_$target-$aosp_target_release-$variant
         fi
     fi
     return $?
@@ -70,7 +70,7 @@ alias bib=breakfast
 function eat()
 {
     if [ "$OUT" ] ; then
-        ZIPPATH=`ls -tr "$OUT"/lineage-*.zip | tail -1`
+        ZIPPATH=`ls -tr "$OUT"/Alch3myOS-*.zip | tail -1`
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
             return 1
@@ -78,13 +78,13 @@ function eat()
         echo "Waiting for device..."
         adb wait-for-device-recovery
         echo "Found device"
-        if (adb shell getprop ro.lineage.device | grep -q "$LINEAGE_BUILD"); then
+        if (adb shell getprop ro.alch3my.device | grep -q "$ALCH3MY_BUILD"); then
             echo "Rebooting to sideload for install"
             adb reboot sideload-auto-reboot
             adb wait-for-sideload
             adb sideload $ZIPPATH
         else
-            echo "The connected device does not appear to be $LINEAGE_BUILD, run away!"
+            echo "The connected device does not appear to be $ALCH3MY_BUILD, run away!"
         fi
         return $?
     else
@@ -371,14 +371,14 @@ function installboot()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.lineage.device | grep -q "$LINEAGE_BUILD");
+    if (adb shell getprop ro.alch3my.device | grep -q "$ALCH3MY_BUILD");
     then
         adb push $OUT/boot.img /cache/
         adb shell dd if=/cache/boot.img of=$PARTITION
         adb shell rm -rf /cache/boot.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $LINEAGE_BUILD, run away!"
+        echo "The connected device does not appear to be $ALCH3MY_BUILD, run away!"
     fi
 }
 
@@ -409,14 +409,14 @@ function installrecovery()
     adb wait-for-device-recovery
     adb root
     adb wait-for-device-recovery
-    if (adb shell getprop ro.lineage.device | grep -q "$LINEAGE_BUILD");
+    if (adb shell getprop ro.alch3my.device | grep -q "$ALCH3MY_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
         adb shell rm -rf /cache/recovery.img
         echo "Installation complete."
     else
-        echo "The connected device does not appear to be $LINEAGE_BUILD, run away!"
+        echo "The connected device does not appear to be $ALCH3MY_BUILD, run away!"
     fi
 }
 
@@ -771,7 +771,7 @@ function dopush()
         echo "Device Found."
     fi
 
-    if (adb shell getprop ro.lineage.device | grep -q "$LINEAGE_BUILD") || [ "$FORCE_PUSH" = "true" ];
+    if (adb shell getprop ro.alch3my.device | grep -q "$ALCH3MY_BUILD") || [ "$FORCE_PUSH" = "true" ];
     then
     # retrieve IP and PORT info if we're using a TCP connection
     TCPIPPORT=$(adb devices \
@@ -890,7 +890,7 @@ EOF
     rm -f $OUT/.log
     return 0
     else
-        echo "The connected device does not appear to be $LINEAGE_BUILD, run away!"
+        echo "The connected device does not appear to be $ALCH3MY_BUILD, run away!"
     fi
 }
 
@@ -915,7 +915,7 @@ function fixup_common_out_dir() {
     common_out_dir=$(_get_build_var_cached OUT_DIR)/target/common
     target_device=$(_get_build_var_cached TARGET_DEVICE)
     common_target_out=common-${target_device}
-    if [ ! -z $LINEAGE_FIXUP_COMMON_OUT ]; then
+    if [ ! -z $ALCH3MY_FIXUP_COMMON_OUT ]; then
         if [ -d ${common_out_dir} ] && [ ! -L ${common_out_dir} ]; then
             mv ${common_out_dir} ${common_out_dir}-${target_device}
             ln -s ${common_target_out} ${common_out_dir}
@@ -977,8 +977,8 @@ function build_kernel() {
         echo "Syncing ${KERNEL_BUILD_TOP}"
         local target_kernel_manifest=$(echo android_kernel_${target_kernel_source}_manifest | tr / _)
         local repo_init_args=("-b" "${lineage_version}")
-        if [ -n "${LINEAGE_MIRROR}" ]; then
-            repo_init_args+=("--reference" "${LINEAGE_MIRROR}")
+        if [ -n "${ALCH3MY_MIRROR}" ]; then
+            repo_init_args+=("--reference" "${ALCH3MY_MIRROR}")
         fi
         if [ -n "${REPO_VERSION}" ]; then
             repo_init_args+=("--repo-rev" "${REPO_VERSION}")
@@ -1022,3 +1022,12 @@ function build_kernel() {
     chmod -x "${target_kernel_dir}/"*
     echo "Kernel build output copied to ${target_kernel_dir}/"
 }
+
+export RELEASE_ENABLE_SAFETY_CENTER_NEW_UI=true
+
+######_ Read / Write Error Bypass
+export REPO_CONFIG=out/.repo_config
+
+# Java Memory R8/D8
+export ANDROID_JAVA_MAX_MEM="20G"
+export JAVA_ARGS="-Xmx8g"
