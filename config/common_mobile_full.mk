@@ -13,19 +13,9 @@ PRODUCT_PACKAGES += \
     Camelot \
     Etar \
     Recorder \
-    Twelve
-endif
-
-ifneq ($(PRODUCT_NO_CAMERA),true)
-PRODUCT_PACKAGES += \
-    Aperture
-endif
-
-ifneq ($(WITH_GMS), true)
-ifneq ($(TARGET_EXCLUDES_AUDIOFX),true)
-PRODUCT_PACKAGES += \
+    Twelve \
+    Aperture \
     AudioFX
-endif
 endif
 
 # Extra cmdline tools

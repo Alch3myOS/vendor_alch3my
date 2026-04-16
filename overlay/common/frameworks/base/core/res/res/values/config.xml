@@ -16,6 +16,11 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<!-- Alch3my Alter -->
+	<string-array name="config_defaultListenerAccessPackages" translatable="false">
+        <item>com.android.launcher3</item>
+    </string-array>
+    
     <!-- Package name(s) containing location provider support.
          These packages can contain services implementing location providers,
          such as the Geocode Provider, Network Location Provider, and Fused

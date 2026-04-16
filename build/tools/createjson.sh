@@ -23,10 +23,10 @@ fi
 # Set OTA json location
 if [[ "$BUILD_VARIANT" == "vanilla" ]]; then
     existingOTAjson="./vendor/OTA/builds/vanilla/${DEVICE}.json"
-    DOWNLOAD_URL="https://sourceforge.net/projects/ghosuto/files/${DEVICE}/vanilla/${FILENAME}/download"
+    DOWNLOAD_URL="https://https://sourceforge.net/projects/libra420t-alch3my/files/Alch3myOS/${DEVICE}/1.0/vanilla/${FILENAME}/download"
 else
     existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
-    DOWNLOAD_URL="https://sourceforge.net/projects/ghosuto/files/${DEVICE}/${FILENAME}/download"
+    DOWNLOAD_URL="https://https://sourceforge.net/projects/libra420t-alch3my/files/Alch3myOS/${DEVICE}/1.0/gapps/${FILENAME}/download"
 fi
 
 output="${PRODUCT_OUT}/${DEVICE}.json"
@@ -109,9 +109,5 @@ cat <<EOF >"$output"
   ]
 }
 EOF
-
-if [ ! -f "$existingOTAjson" ]; then
-    echo "There is no official support for this device yet"
-fi
 
 echo "JSON file generation completed"
