@@ -23,7 +23,25 @@ SHA256 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/sha256sum
 $(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(LINEAGE_TARGET_PACKAGE)
 	$(hide) $(SHA256) $(LINEAGE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LINEAGE_TARGET_PACKAGE).sha256sum
-	@echo "Package Complete: $(LINEAGE_TARGET_PACKAGE)" >&2
+	$(hide) ./vendor/lineage/build/tools/createjson.sh $(TARGET_DEVICE) $(PRODUCT_OUT) $(LINEAGE_VERSION).zip
+	$(hide) rm -rf $(call intermediates-dir-for,PACKAGING,target_files)
+	$(hide) ./vendor/lineage/build/tasks/ascii_output.sh
+	echo -e "\n${CL_BLD}${CL_GRN}================================================================================${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_CYN}                🎊✨ BUILD COMPLETED SUCCESSFULLY! ✨🎊${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_GRN}================================================================================${CL_RST}" >&2
+	echo -e "" >&2
+	echo -e "${CL_BLD}${CL_WHT}📦 Package:${CL_RST}  ${CL_BLD}${CL_YEL}$(notdir $(LINEAGE_TARGET_PACKAGE))${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_WHT}📍 Location:${CL_RST} ${CL_BLD}${CL_BLU}$(dir $(LINEAGE_TARGET_PACKAGE))${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_WHT}📱 Device:${CL_RST}   ${CL_BLD}${CL_CYN}$(TARGET_DEVICE) [$(TARGET_BUILD_VARIANT)]${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_WHT}💾 Size:${CL_RST}     ${CL_BLD}${CL_YEL}$(shell du -h $(LINEAGE_TARGET_PACKAGE) | cut -f1)${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_WHT}⏱️ Finished At:${CL_RST} ${CL_BLD}${CL_MAG}$(shell date '+%Y-%m-%d %H:%M:%S')${CL_RST}" >&2
+	echo -e "" >&2
+	echo -e "${CL_BLD}${CL_RED}                ❤️ Thank you for building Alch3myOS! ❤️${CL_RST}" >&2
+	echo -e "" >&2
+	echo -e "${CL_BLD}${CL_GRN}=============================================================================${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_YEL}	🎉 The Magic has only just started, ready to flash? 🎉${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_GRN}=============================================================================${CL_RST}" >&2
+	echo -e "" >&2
 
 .PHONY: bacon
-bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL)
+bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL) 

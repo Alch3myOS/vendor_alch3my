@@ -1022,3 +1022,12 @@ function build_kernel() {
     chmod -x "${target_kernel_dir}/"*
     echo "Kernel build output copied to ${target_kernel_dir}/"
 }
+
+export RELEASE_ENABLE_SAFETY_CENTER_NEW_UI=true
+
+######_ Read / Write Error Bypass
+export REPO_CONFIG=out/.repo_config
+
+# Java Memory R8/D8
+export ANDROID_JAVA_MAX_MEM="20G"
+export JAVA_ARGS="-Xmx8g"
