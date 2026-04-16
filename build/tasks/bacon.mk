@@ -36,7 +36,7 @@ $(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
 	echo -e "${CL_BLD}${CL_WHT}💾 Size:${CL_RST}     ${CL_BLD}${CL_YEL}$(shell du -h $(LINEAGE_TARGET_PACKAGE) | cut -f1)${CL_RST}" >&2
 	echo -e "${CL_BLD}${CL_WHT}⏱️ Finished At:${CL_RST} ${CL_BLD}${CL_MAG}$(shell date '+%Y-%m-%d %H:%M:%S')${CL_RST}" >&2
 	echo -e "" >&2
-	echo -e "${CL_BLD}${CL_RED}                ❤️ Thank you for building Lunaris-AOSP! ❤️${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_RED}                ❤️ Thank you for building Alch3myOS! ❤️${CL_RST}" >&2
 	echo -e "" >&2
 	echo -e "${CL_BLD}${CL_GRN}=============================================================================${CL_RST}" >&2
 	echo -e "${CL_BLD}${CL_YEL}	🎉 Your ROM is hot out of the oven & ready to flash! 🎉${CL_RST}" >&2
@@ -44,4 +44,4 @@ $(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
 	echo -e "" >&2
 
 .PHONY: bacon
-bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL)
+bacon: $(LINEAGE_TARGET_PACKAGE) $(DEFAULT_GOAL) 

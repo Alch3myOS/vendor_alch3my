@@ -8,6 +8,7 @@ PRODUCT_PACKAGES += \
     sensitive_pn.xml
 
 # World APN list
+include vendor/CarrierSettings/telephony.mk
 PRODUCT_PACKAGES += \
     apns-conf.xml
 
@@ -29,4 +30,4 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Disable mobile data by default
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.android.mobiledata=false
+    ro.com.android.mobiledata=true

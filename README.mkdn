@@ -1,6 +1,0 @@
-Lunaris AOSP
-============
-
-Submitting patches
-------------------
-Patches are always welcome! Please submit your patches via pull request.

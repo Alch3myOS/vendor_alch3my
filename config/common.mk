@@ -1,19 +1,15 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product-if-exists, vendor/lineage/config/lunaris.mk)
+$(call inherit-product-if-exists, vendor/lineage/config/alch3my.mk)
 $(call inherit-product-if-exists, vendor/extras/config.mk)
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 $(call inherit-product-if-exists, vendor/fontbox/config.mk)
 $(call inherit-product-if-exists, vendor/certification/config.mk)
 
-ifeq ($(WITH_BCR),true)
 $(call inherit-product, vendor/bcr/bcr.mk)
-endif
 
-# Allow vendor prebuilt repos to exclude themselves from bp scanning
--include $(sort $(wildcard vendor/*/*/exclude-bp.mk))
 
-PRODUCT_BRAND ?= LunarisAOSP
+PRODUCT_BRAND ?= Alch3myOS
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -119,8 +115,8 @@ endif
 
 # Enable whole-program R8 Java optimizations for SystemUI and system_server,
 # but also allow explicit overriding for testing and development.
-SYSTEM_OPTIMIZE_JAVA ?= true
-SYSTEMUI_OPTIMIZE_JAVA ?= true
+SYSTEM_OPTIMIZE_JAVA := true
+SYSTEMUI_OPTIMIZE_JAVA := true
 
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
@@ -164,10 +160,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     SimpleSettingsConfig
 
-ifneq ($(WITH_GMS), true)
 PRODUCT_PACKAGES += \
     SimpleDeviceConfig
-endif
 
 # Disable default frame rate limit for games
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -255,6 +249,10 @@ endif
 
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
+	Settings \
+	Launcher3 \
+	Launcher3QuickSteps \
+	NexusLauncherRelease \
     CarSystemUI \
     SystemUI
 
@@ -302,15 +300,8 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 
 include vendor/lineage/config/version.mk
 
--include vendor/lineage-priv/keys/keys.mk
-
--include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/lineage/config/partner_gms.mk
-
 # Singing keys
-ifeq ($(LUNARIS_BUILD_TYPE),OFFICIAL)
-    $(call inherit-product, vendor/lunaris-priv/keys/keys.mk)
-endif
+include vendor/lineage-priv/keys/keys.mk
 
 ifeq ($(WITH_GMS), true)
 PRODUCT_PRODUCT_PROPERTIES += \

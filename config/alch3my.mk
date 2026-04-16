@@ -18,34 +18,27 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.dun.override=0 \
     persist.sys.disable_rescue=true
 
+# Broken config
+PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
+
 # Disable touch video heatmap to reduce latency, motion jitter, and CPU usage
 # on supported devices with Deep Press input classifier HALs and models
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.input.video_enabled=false
 
 # Enable blur
-TARGET_ENABLE_BLUR ?= true
-ifeq ($(TARGET_ENABLE_BLUR),true)
-PRODUCT_SYSTEM_PROPERTIES += \
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.custom.blur.enable=true \
     persist.sysui.disableBlur=false \
     ro.surface_flinger.supports_background_blur=1
-else
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.custom.blur.enable=false \
-    persist.sysui.disableBlur=true \
-    ro.surface_flinger.supports_background_blur=0
-endif
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml
 
 # ColumbusService
-ifneq ($(TARGET_SUPPORTS_QUICK_TAP),false)
 PRODUCT_PACKAGES += \
     ColumbusService
-endif
 
 # Use a generic profile based boot image by default
 PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
@@ -56,7 +49,9 @@ PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := \
     art/build/boot/boot-image-profile.txt
 
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-    system/etc/preloaded-classes
+    system/etc/preloaded-classes \
+    system/fonts/RobotoFallback-VF.ttf \
+    system/priv-app/OmniStyle/OmniStyle.apk
 
 # Disable async MTE on a few processes
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
@@ -97,10 +92,10 @@ USE_DEX2OAT_DEBUG := false
 OVERRIDE_DISABLE_DEXOPT_ALL := false
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
-TARGET_OPTIMIZED_DEXOPT ?= false
+TARGET_OPTIMIZED_DEXOPT := true
 ifeq ($(TARGET_OPTIMIZED_DEXOPT),true)
     PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed-profile
-    PRODUCT_SYSTEM_PROPERTIES += \
+    PRODUCT_SYSTEM_EXT_PROPERTIES += \
         pm.dexopt.post-boot=speed-profile \
         pm.dexopt.first-boot=verify \
         pm.dexopt.boot-after-ota=verify \
@@ -135,37 +130,20 @@ endif
 # Extra packages
 PRODUCT_PACKAGES += \
     AxThemeStore \
-    BatteryStatsViewer \
     GameSpace \
     LMOFreeform \
     LMOFreeformSidebar \
     OmniJaws \
     OmniStyle
 
-ifneq ($(TARGET_DISABLE_MATLOG),true)
-PRODUCT_PACKAGES += \
-    MatLog
-endif
+# Google Face Unlock
+$(call inherit-product, vendor/google/faceunlock/config.mk)
 
-ifneq ($(TARGET_FACE_UNLOCK_SUPPORTED),false)
-PRODUCT_PACKAGES += \
-    FaceUnlock
+PRODUCT_SYSTEM_EXT_PACKAGES += \
+	FaceUnlockSettingsOverlay
 
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    ro.face.sense_service=true
-
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/android.hardware.biometrics.face.xml
-endif
-
-# DeviceAsWebcam
-ifeq ($(TARGET_BUILD_DEVICE_AS_WEBCAM), true)
-PRODUCT_PACKAGES += \
-    DeviceAsWebcam
-
-PRODUCT_VENDOR_PROPERTIES += \
-    ro.usb.uvc.enabled=true
-endif
+# GoogleCamera
+$(call inherit-product, vendor/google/camera/config.mk)
 
 PRODUCT_PRODUCT_PROPERTIES += \
     remote_provisioning.enable_rkpd=true \
@@ -179,12 +157,12 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.display_refresh_rates_list=$(TARGET_SUPPORTED_REFRESH_RATES)
 
 # UDFPS properties
-TARGET_CUSTOM_UDFPS ?= false
-PRODUCT_SYSTEM_PROPERTIES += \
+TARGET_CUSTOM_UDFPS := true
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.sys.udfps.custom=$(TARGET_CUSTOM_UDFPS)
 
-BYPASS_CHARGE_SUPPORTED ?= false
-HBM_SUPPORTED ?= false
+BYPASS_CHARGE_SUPPORTED := true
+HBM_SUPPORTED := true
 HBM_NODE ?= /sys/class/backlight/panel0-backlight/hbm_mode
 
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -207,15 +185,11 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     PihooksGmsFp="google/blazer_beta/blazer:17/CP21.260306.017/15063635:user/release-keys" \
     PihooksGmsModel="Pixel 10 Pro"
 
-# Quick Switch (Pixel Launcher)
-ifeq ($(WITH_GMS),true)
-PRODUCT_SYSTEM_PROPERTIES += \
-    persist.sys.default_launcher=1 \
+# Quick Switch
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    persist.sys.default_launcher=0 \
     persist.sys.quickswitch_pixel_shipped=1
-else
-PRODUCT_SYSTEM_PROPERTIES += \
-    persist.sys.default_launcher=0
-endif
+
 
 PERF_ANIM_OVERRIDE ?= false
 
@@ -227,7 +201,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
     debug.sf.predict_hwc_composition_strategy=0
 endif
 
-ifeq ($(SURFACE_FLINGER_BOOST),true)
-PRODUCT_PRODUCT_PROPERTIES += \
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.surface_flinger.uclamp.min=180
-endif
+
