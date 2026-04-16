@@ -1,8 +1,3 @@
-# GMS
-ifeq ($(WITH_GMS),true)
-WITH_GMS_COMMS_SUITE := true
-endif
-
 # Sensitive Phone Numbers list
 PRODUCT_PACKAGES += \
     sensitive_pn.xml
@@ -16,10 +11,6 @@ PRODUCT_PACKAGES += \
     messaging \
     Stk
 
-# Default ringtone
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.ringtone=Orion.ogg
-
 # Tethering - allow without requiring a provisioning app
 # (for devices that check this)
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -27,4 +18,4 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Disable mobile data by default
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.android.mobiledata=false
+    ro.com.android.mobiledata=true

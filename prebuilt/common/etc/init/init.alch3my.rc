@@ -1,0 +1,8 @@
+# Alch3myLabs Boot Animation Easter Egg
+on property:sys.alch3my.easter_egg=1
+    setprop service.bootanim.exit 0
+    start bootanim
+
+on property:sys.alch3my.easter_egg=0
+    setprop service.bootanim.exit 1
+    stop bootanim
