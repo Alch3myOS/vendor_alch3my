@@ -27,7 +27,7 @@ if [[ "$BUILD_VARIANT" == "vanilla" ]]; then
 else
     existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
     DOWNLOAD_URL="https://https://sourceforge.net/projects/libra420t-alch3my/files/Alch3myOS/${DEVICE}/1.0/gapps/${FILENAME}/download"
-#fi
+fi
 
 output="${PRODUCT_OUT}/${DEVICE}.json"
 

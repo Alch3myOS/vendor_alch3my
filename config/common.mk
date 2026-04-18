@@ -300,10 +300,8 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 
 include vendor/lineage/config/version.mk
 
-ifeq (ALCH3MY_BUILD_TYPE),OFFICIAL)
 # Singing keys
-include vendor/alch3my-priv/keys/keys.mk
-endif
+include vendor/lineage-priv/keys/keys.mk
 
 ifeq ($(WITH_GMS), true)
 PRODUCT_PRODUCT_PROPERTIES += \
