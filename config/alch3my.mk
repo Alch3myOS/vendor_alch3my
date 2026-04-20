@@ -118,7 +118,7 @@ PERF_ANIM_OVERRIDE ?= false
 
 ifeq ($(SURFACE_FLINGER_BOOST),true)
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.surface_flinger.uclamp.min=180
+    ro.surface_flinger.uclamp.min=135
 endif
 
 # Private Keys
