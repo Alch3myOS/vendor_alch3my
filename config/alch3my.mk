@@ -1,5 +1,6 @@
 # Alch3myOS packages
 PRODUCT_PACKAGES += \
+    AxSandbox \
     BatteryStatsViewer \
     GameSpace \
     LMOFreeform \
