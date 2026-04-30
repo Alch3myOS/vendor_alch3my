@@ -156,10 +156,12 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 BYPASS_CHARGE_SUPPORTED := true
 HBM_SUPPORTED := true
 HBM_NODE ?= /sys/class/backlight/panel0-backlight/hbm_mode
+USE_REALITY_ENGINE ?= false
 
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED) \
-    persist.sys.hbmservice_file=$(HBM_NODE)
+    persist.sys.hbmservice_file=$(HBM_NODE) \
+    persist.display.reality.engine.enabled=$(USE_REALITY_ENGINE)
 
 # Quick Switch
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
