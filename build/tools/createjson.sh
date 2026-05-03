@@ -23,10 +23,10 @@ fi
 # Set OTA json location
 if [[ "$BUILD_VARIANT" == "vanilla" ]]; then
     existingOTAjson="./vendor/OTA/builds/vanilla/${DEVICE}.json"
-    DOWNLOAD_URL="https://https://sourceforge.net/projects/libra420t-alch3my/files/Alch3myOS/${DEVICE}/1.0/vanilla/${FILENAME}/download"
+    DOWNLOAD_URL="https://https://sourceforge.net/projects/Alch3myOS/files/Alch3myOS/${DEVICE}/1.0/vanilla/${FILENAME}/download"
 else
     existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
-    DOWNLOAD_URL="https://https://sourceforge.net/projects/libra420t-alch3my/files/Alch3myOS/${DEVICE}/1.0/gapps/${FILENAME}/download"
+    DOWNLOAD_URL="https://https://sourceforge.net/projects/Alch3myOS/files/Alch3myOS/${DEVICE}/1.0/gapps/${FILENAME}/download"
 fi
 
 output="${PRODUCT_OUT}/${DEVICE}.json"
