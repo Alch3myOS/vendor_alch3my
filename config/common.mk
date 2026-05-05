@@ -277,8 +277,8 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 endif
 endif
 
-# SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
+    GameSpace \
     Launcher3QuickStep \
     NexusLauncherRelease \
     Settings \
