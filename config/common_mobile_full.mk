@@ -7,17 +7,6 @@ PRODUCT_PACKAGES += \
     Profiles \
     Seedvault
 
-ifneq ($(WITH_GMS), true)  
-# Apps
-PRODUCT_PACKAGES += \
-    Camelot \
-    Etar \
-    Recorder \
-    Twelve \
-    Aperture \
-    AudioFX
-endif
-
 # Extra cmdline tools
 PRODUCT_PACKAGES += \
     unrar \

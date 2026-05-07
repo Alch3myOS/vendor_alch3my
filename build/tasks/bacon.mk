@@ -39,7 +39,7 @@ $(LINEAGE_TARGET_PACKAGE): $(INTERNAL_OTA_PACKAGE_TARGET)
 	echo -e "${CL_BLD}${CL_RED}                ❤️ Thank you for building Alch3myOS! ❤️${CL_RST}" >&2
 	echo -e "" >&2
 	echo -e "${CL_BLD}${CL_GRN}=============================================================================${CL_RST}" >&2
-	echo -e "${CL_BLD}${CL_YEL}	🎉 Your ROM is hot out of the oven & ready to flash! 🎉${CL_RST}" >&2
+	echo -e "${CL_BLD}${CL_YEL}	🎉 The Magic has only just started, ready to flash? 🎉${CL_RST}" >&2
 	echo -e "${CL_BLD}${CL_GRN}=============================================================================${CL_RST}" >&2
 	echo -e "" >&2
 

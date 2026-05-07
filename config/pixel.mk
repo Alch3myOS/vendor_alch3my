@@ -1,5 +1,5 @@
 # Pixel APN list
-include vendor/google/CarrierSettings/telephony.mk
+$(call inherit-product, vendor/google/CarrierSettings/telephony.mk)
 
 # Google Face Unlock
 $(call inherit-product, vendor/google/faceunlock/config.mk)

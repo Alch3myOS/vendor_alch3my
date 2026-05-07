@@ -13,21 +13,9 @@ DEVICE="$1"
 PRODUCT_OUT="$2"
 FILENAME="$3"
 
-# Detect build variant
-if [[ "$FILENAME" == *"vanilla"* ]]; then
-    BUILD_VARIANT="vanilla"
-else
-    BUILD_VARIANT="gapps"
-fi
-
-# Set OTA json location
-if [[ "$BUILD_VARIANT" == "vanilla" ]]; then
-    existingOTAjson="./vendor/OTA/builds/vanilla/${DEVICE}.json"
-    DOWNLOAD_URL="https://https://sourceforge.net/projects/Alch3myOS/files/Alch3myOS/${DEVICE}/1.0/vanilla/${FILENAME}/download"
-else
-    existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
-    DOWNLOAD_URL="https://https://sourceforge.net/projects/Alch3myOS/files/Alch3myOS/${DEVICE}/1.0/gapps/${FILENAME}/download"
-fi
+BUILD_VARIANT="gapps"
+existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
+DOWNLOAD_URL="https://sourceforge.net/projects/libra420t-alch3my/files/${DEVICE}/1.0/gapps/${FILENAME}/download"
 
 output="${PRODUCT_OUT}/${DEVICE}.json"
 
@@ -52,16 +40,10 @@ if [ -f "$existingOTAjson" ]; then
     DEVICE_NAME=$(extract_field "device")
     BUILDTYPE=$(extract_field "buildtype")
     FORUM=$(extract_field "forum")
-    GAPPS=$(extract_field "gapps")
     FIRMWARE=$(extract_field "firmware")
-    MODEM=$(extract_field "modem")
-    BOOTLOADER=$(extract_field "bootloader")
     RECOVERY=$(extract_field "recovery")
     PAYPAL=$(extract_field "paypal")
     TELEGRAM=$(extract_field "telegram")
-    DT=$(extract_field "dt")
-    COMMON_DT=$(extract_field "common-dt")
-    KERNEL=$(extract_field "kernel")
 fi
 
 # Extract version from filename
@@ -95,16 +77,10 @@ cat <<EOF >"$output"
       "version": "$VERSION",
       "buildtype": "${BUILDTYPE:-}",
       "forum": "${FORUM:-}",
-      "gapps": "${GAPPS:-}",
       "firmware": "${FIRMWARE:-}",
-      "modem": "${MODEM:-}",
-      "bootloader": "${BOOTLOADER:-}",
       "recovery": "${RECOVERY:-}",
       "paypal": "${PAYPAL:-}",
       "telegram": "${TELEGRAM:-}",
-      "dt": "${DT:-}",
-      "common-dt": "${COMMON_DT:-}",
-      "kernel": "${KERNEL:-}"
     }
   ]
 }

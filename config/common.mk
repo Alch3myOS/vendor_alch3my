@@ -1,18 +1,15 @@
 PRODUCT_BRAND ?= Alch3myOS
 
+# Pixel APN, Camera, & FaceUnlock
 $(call inherit-product, vendor/lineage/config/pixel.mk)
 
 # PIF
 $(call inherit-product, vendor/lineage/config/pif.mk)
 
-# Allow vendor/extra to override any property by setting it first
-$(call inherit-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product-if-exists, vendor/lineage/config/alch3my.mk)
-$(call inherit-product-if-exists, vendor/extras/config.mk)
-$(call inherit-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product-if-exists, vendor/fontbox/config.mk)
-#$(call inherit-product-if-exists, vendor/certification/config.mk)
-$(call inherit-product-if-exists, vendor/bcr/bcr.mk)
+# Allow vendor/..* to override any property by setting it first
+$(call inherit-product, vendor/lineage/config/alch3my.mk)
+$(call inherit-product, vendor/extras/config.mk)
+$(call inherit-product, vendor/bcr/bcr.mk)
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -20,16 +17,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
 else
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-endif
-
-ifeq ($(PRODUCT_IS_ATV),true)
-ifeq ($(PRODUCT_ATV_CLIENTID_BASE),)
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.oem.key1=ATV00100020
-else
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.oem.key1=$(PRODUCT_ATV_CLIENTID_BASE)
-endif
 endif
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
@@ -55,14 +42,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
     vendor/lineage/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions
-
-#ifeq ($(LINEAGE_BUILD),true)
-#PRODUCT_COPY_FILES += \
-#    vendor/lineage/prebuilt/common/bin/50-lineage.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-lineage.sh
-
-#PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-#    system/addon.d/50-lineage.sh
-#endif
 
 ifneq ($(strip $(AB_OTA_PARTITIONS) $(AB_OTA_POSTINSTALL_CONFIG)),)
 PRODUCT_COPY_FILES += \
@@ -140,19 +119,8 @@ PRODUCT_PACKAGES += \
     framework_compatibility_matrix.lineage.xml
 
 # Lineage packages
-ifeq ($(PRODUCT_IS_ATV),)
 PRODUCT_PACKAGES += \
-    ExactCalculator \
-    Jelly
-endif
-
-ifeq ($(PRODUCT_IS_AUTOMOTIVE),)
-PRODUCT_PACKAGES += \
-    LineageParts \
-    LineageSetupWizard
-endif
-
-PRODUCT_PACKAGES += \
+	LineageParts \
     LineageSettingsProvider \
     Updater
 
@@ -254,8 +222,6 @@ endif
 PRODUCT_DEXPREOPT_SPEED_APPS += \
 	Launcher3 \
 	Launcher3QuickSteps \
-	NexusLauncherRelease \
-    CarSystemUI \
     Settings \
     SystemUI
 
@@ -269,13 +235,6 @@ endif
 
 # Audio files
 $(call inherit-product, vendor/lineage/audio/audio.mk)
-
-# SetupWizard
-ifneq ($(WITH_GMS), true)
-PRODUCT_PRODUCT_PROPERTIES += \
-    setupwizard.theme=glif_expressive \
-    setupwizard.feature.day_night_mode_enabled=true
-endif
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay/no-rro
 PRODUCT_PACKAGE_OVERLAYS += \
@@ -307,20 +266,8 @@ ifneq ($(filter OFFICIAL Official official,$(ALCH3MY_BUILD_TYPE)),)
 include vendor/lineage-priv/keys/keys.mk
 endif
 
-ifeq ($(WITH_GMS), true)
 $(call inherit-product, vendor/gms/products/gms.mk)
-PRODUCT_PRODUCT_PROPERTIES += \
-    with_google_apps=true
-endif
 
-# Custom Overlays
-PRODUCT_PACKAGES += \
-    PixelLauncherOverlayCustom
-
-ifeq ($(WITH_GMS),true)
 PRODUCT_PACKAGES += \
     SettingsOverlayPixelThemePicker
-else
-PRODUCT_PACKAGES += \
-    SettingsOverlay
-endif
+
