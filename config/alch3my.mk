@@ -70,7 +70,6 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 # Dexopt
 ART_BUILD_HOST_DEBUG := false
 ART_BUILD_TARGET_DEBUG := false
-
 PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
 WITH_DEXPREOPT_DEBUG_INFO := false
 
@@ -123,6 +122,8 @@ $(call add-product-dex-preopt-module-config,framework,--compiler-filter=speed-pr
 
 # Extra packages
 PRODUCT_PACKAGES += \
+	AppLocker \
+	AxSandbox \
     AxQuickLook \
     AxThemeStore \
     GameSpace \
@@ -144,10 +145,9 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # UDFPS properties
 TARGET_CUSTOM_UDFPS := true
-
 BYPASS_CHARGE_SUPPORTED := true
 HBM_SUPPORTED := true
-HBM_NODE ?= /sys/class/backlight/panel0-backlight/hbm_mode
+HBM_NODE := /sys/class/backlight/panel0-backlight/hbm_mode
 USE_REALITY_ENGINE := true
 
 PRODUCT_PRODUCT_PROPERTIES += \

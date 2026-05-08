@@ -129,9 +129,7 @@ PRODUCT_COPY_FILES += \
 
 # Config
 PRODUCT_PACKAGES += \
-    SimpleSettingsConfig
-
-PRODUCT_PACKAGES += \
+    SimpleSettingsConfig \
     SimpleDeviceConfig
 
 # Disable default frame rate limit for games
