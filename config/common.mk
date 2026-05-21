@@ -219,16 +219,8 @@ endif
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
 	Alch3myLabs \
-	AppLocker \
-	AxQuickLook \
-	AxSandbox \
-	AxThemeStore \
-	ColumbusService \
-	GameSpace \
 	Launcher3 \
 	Launcher3QuickSteps \
-	OmniStyle \
-	OmniJaws \
     Settings \
     SystemUI
 

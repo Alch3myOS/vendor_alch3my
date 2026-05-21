@@ -127,8 +127,19 @@ PRODUCT_PACKAGES += \
 # Extra packages
 PRODUCT_PACKAGES += \
 	AppLocker \
-	AxSandbox \
     AxQuickLook \
+    AxSandbox \
+    AxThemeStore \
+    GameSpace \
+    LMOFreeform \
+    LMOFreeformSidebar \
+    OmniJaws \
+    OmniStyle
+
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+	AppLocker \
+    AxQuickLook \
+    AxSandbox \
     AxThemeStore \
     GameSpace \
     LMOFreeform \
