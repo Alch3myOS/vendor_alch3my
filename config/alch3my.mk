@@ -162,7 +162,8 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Quick Switch
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
-    persist.sys.default_launcher=0
+    persist.sys.default_launcher=1 \
+    persist.sys.quickswitch_pixel_shipped=1
 
 # Google Wallpaper Overlays
 PRODUCT_PACKAGES += \
