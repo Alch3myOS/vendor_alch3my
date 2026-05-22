@@ -268,5 +268,6 @@ endif
 $(call inherit-product, vendor/gms/products/gms.mk)
 
 PRODUCT_PACKAGES += \
-    SettingsOverlayPixelThemePicker
+    SettingsOverlayPixelThemePicker \
+    PixelLauncherOverlayCustom
 
