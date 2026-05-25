@@ -13,6 +13,31 @@ PIF_SDK_INT := 36
 PIF_INITIAL_SDK := 34
 
 # 2. Dynamic Device Detection
+# --- 6 Series ---
+ifeq ($(LINEAGE_BUILD),oriole)
+PIF_PRODUCT := oriole
+PIF_MODEL := "Pixel 6"
+PIF_INC := 14401865
+TARGET_PIF_ID := $(PIF_ID_0)
+TARGET_PIF_SECURITY_PATCH := $(PIF_SECURITY_PATCH_0)
+endif
+
+ifeq ($(LINEAGE_BUILD),raven)
+PIF_PRODUCT := raven
+PIF_MODEL := "Pixel 6 Pro"
+PIF_INC := 14401865
+TARGET_PIF_ID := $(PIF_ID_0)
+TARGET_PIF_SECURITY_PATCH := $(PIF_SECURITY_PATCH_0)
+endif
+
+ifeq ($(LINEAGE_BUILD),bluejay)
+PIF_PRODUCT := bluejay
+PIF_MODEL := "Pixel 6a"
+PIF_INC := 14401865
+TARGET_PIF_ID := $(PIF_ID_0)
+TARGET_PIF_SECURITY_PATCH := $(PIF_SECURITY_PATCH_0)
+endif
+
 # --- 7 Series ---
 ifeq ($(LINEAGE_BUILD),panther)
 PIF_PRODUCT := panther
@@ -136,4 +161,3 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PihooksGmsFp="google/$(PIF_PRODUCT)/$(PIF_PRODUCT):$(PIF_RELEASE)/$(TARGET_PIF_ID)/$(PIF_INC):user/release-keys" \
     PihooksGmsModel=$(PIF_MODEL)
-
