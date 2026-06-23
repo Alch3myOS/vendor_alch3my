@@ -78,6 +78,10 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.surface_flinger.supports_background_blur=0
 endif
 
+# Enable background blur for widget picker
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.launcher.depth.widget=true
+
 # Enable Material Design 3 Expressive
 PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
 
