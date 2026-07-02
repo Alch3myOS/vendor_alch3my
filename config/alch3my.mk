@@ -157,11 +157,13 @@ BYPASS_CHARGE_SUPPORTED := true
 HBM_SUPPORTED := true
 HBM_NODE := /sys/class/backlight/panel0-backlight/hbm_mode
 USE_REALITY_ENGINE := true
+USE_ADVANCED_DISPLAY_COLOR := false
 
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED) \
     persist.sys.hbmservice_file=$(HBM_NODE) \
     persist.display.reality.engine.enabled=$(USE_REALITY_ENGINE) \
+    persist.display.color.advanced.enabled=$(USE_ADVANCED_DISPLAY_COLOR) \
     persist.sys.udfps.custom=$(TARGET_CUSTOM_UDFPS)
 
 # Quick Switch
