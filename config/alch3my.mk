@@ -126,6 +126,7 @@ PRODUCT_PACKAGES += \
     GameSpace \
     LMOFreeform \
     LMOFreeformSidebar \
+    NOSAtmosphereEffect \
     OmniJaws \
     OmniStyle
 
