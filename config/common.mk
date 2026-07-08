@@ -11,6 +11,10 @@ $(call inherit-product, vendor/lineage/config/alch3my.mk)
 $(call inherit-product, vendor/extras/config.mk)
 $(call inherit-product, vendor/bcr/bcr.mk)
 
+# Exclude repos from bp scanning
+PRODUCT_SOURCE_ROOT_DIRS += -kernel/platform
+PRODUCT_SOURCE_ROOT_DIRS += -prebuilts/misc/protobuf_vendorcompat
+
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.com.google.clientidbase=android-google
