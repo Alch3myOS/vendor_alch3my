@@ -1028,6 +1028,8 @@ function generate_host_overrides() {
 
 generate_host_overrides
 
+export RELEASE_ENABLE_SAFETY_CENTER_NEW_UI=true
+
 ######_ Read / Write Error Bypass
 export REPO_CONFIG=out/.repo_config
 

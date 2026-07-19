@@ -222,11 +222,11 @@ endif
 
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-	Alch3myLabs \
+	Arcanium \
 	Launcher3 \
 	Launcher3QuickSteps \
-    Settings \
-    SystemUI
+	Settings \
+	SystemUI
 
 PRODUCT_PRODUCT_PROPERTIES += \
     dalvik.vm.systemuicompilerfilter=speed
