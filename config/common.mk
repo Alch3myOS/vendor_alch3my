@@ -1,10 +1,9 @@
 PRODUCT_BRAND ?= Alch3myOS
 
+ifeq ($(IS_PIXEL),true)
 # Pixel APN, Camera, & FaceUnlock
 $(call inherit-product, vendor/lineage/config/pixel.mk)
-
-# PIF
-$(call inherit-product, vendor/lineage/config/pif.mk)
+endif
 
 # Allow vendor/..* to override any property by setting it first
 $(call inherit-product, vendor/lineage/config/alch3my.mk)

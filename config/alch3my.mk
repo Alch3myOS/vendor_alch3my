@@ -34,7 +34,10 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml
+    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml \
+    # Include Alch3myOS Transmutation Init Script
+PRODUCT_COPY_FILES += \
+    vendor/lineage/build/tools/init.alch3my.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.alch3my.rc
 
 # ColumbusService
 PRODUCT_PACKAGES += \
@@ -52,7 +55,8 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/etc/preloaded-classes \
     system/fonts/RobotoFallback-VF.ttf \
     system/priv-app/OmniStyle/OmniStyle.apk \
-    system/priv-app/MatLog/MatLog.apk
+    system/priv-app/MatLog/MatLog.apk \
+    system/priv-app/Alch3myFX/Alch3myFX.apk
 
 # Enable Material Design 3 Expressive
 PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
@@ -119,6 +123,7 @@ PRODUCT_PACKAGES += \
 
 # Extra packages
 PRODUCT_PACKAGES += \
+	Alch3myFX \
 	AppLocker \
     AxQuickLook \
     AxSandbox \
@@ -131,6 +136,7 @@ PRODUCT_PACKAGES += \
     OmniStyle
 
 PRODUCT_DEXPREOPT_SPEED_APPS += \
+	Alch3myFX \
 	AppLocker \
     AxQuickLook \
     AxSandbox \

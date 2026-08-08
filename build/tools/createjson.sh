@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Copyright (C) 2019-2025 crDroid Android Project
+# Copyright (C) 2026 Alch3myOS
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 #
@@ -15,7 +16,7 @@ FILENAME="$3"
 
 BUILD_VARIANT="gapps"
 existingOTAjson="./vendor/OTA/builds/${DEVICE}.json"
-DOWNLOAD_URL="https://sourceforge.net/projects/libra420t-alch3my/files/${DEVICE}/1.0/gapps/${FILENAME}/download"
+DOWNLOAD_URL="https://sourceforge.net/projects/libra420t-alch3my/files/${DEVICE}/1.0/${FILENAME}/download"
 
 output="${PRODUCT_OUT}/${DEVICE}.json"
 
@@ -36,21 +37,14 @@ extract_field() {
 # Load existing OTA metadata if present
 if [ -f "$existingOTAjson" ]; then
     MAINTAINER=$(extract_field "maintainer")
-    OEM=$(extract_field "oem")
     DEVICE_NAME=$(extract_field "device")
     BUILDTYPE=$(extract_field "buildtype")
-    FORUM=$(extract_field "forum")
-    FIRMWARE=$(extract_field "firmware")
-    RECOVERY=$(extract_field "recovery")
     PAYPAL=$(extract_field "paypal")
     TELEGRAM=$(extract_field "telegram")
 fi
 
 # Extract version from filename
-VERSION=$(echo "$FILENAME" | cut -d'-' -f5 | sed 's/v//')
-V_MAX=$(echo "$VERSION" | cut -d'.' -f1)
-V_MIN=$(echo "$VERSION" | cut -d'.' -f2)
-VERSION="$V_MAX.$V_MIN"
+VERSION=$(echo "$FILENAME" | cut -d'-' -f2 | sed 's/v//')
 
 # Build information
 BUILDPROP="$PRODUCT_OUT/system/build.prop"
@@ -65,8 +59,7 @@ cat <<EOF >"$output"
 {
   "response": [
     {
-      "maintainer": "${MAINTAINER:-}",
-      "oem": "${OEM:-}",
+      "maintainer": "${ALCH3MY_MAINTAINER:-}",
       "device": "${DEVICE_NAME:-$DEVICE}",
       "filename": "$FILENAME",
       "download": "$DOWNLOAD_URL",
@@ -74,11 +67,8 @@ cat <<EOF >"$output"
       "md5": "$MD5",
       "sha256": "$SHA256",
       "size": $SIZE,
-      "version": "$VERSION",
-      "buildtype": "${BUILDTYPE:-}",
-      "forum": "${FORUM:-}",
-      "firmware": "${FIRMWARE:-}",
-      "recovery": "${RECOVERY:-}",
+      "version": "$ALCH3MY_VERSION",
+      "buildtype": "$ALCH3MY_BUILD_TYPE",
       "paypal": "${PAYPAL:-}",
       "telegram": "${TELEGRAM:-}",
     }
