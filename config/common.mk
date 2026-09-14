@@ -293,7 +293,11 @@ endif
 # Audio files
 $(call inherit-product, vendor/alch3my/audio/audio.mk)
 
-PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/alch3my/overlay/no-rro
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
+    vendor/alch3my/overlay/common/external/setupdesign/main \
+    vendor/alch3my/overlay/common/frameworks/base/packages/SettingsLib \
+    vendor/alch3my/overlay/common/frameworks/libs/systemui/iconloaderlib \
+    vendor/alch3my/overlay/no-rro
 PRODUCT_PACKAGE_OVERLAYS += \
     vendor/alch3my/overlay/common \
     vendor/alch3my/overlay/no-rro
