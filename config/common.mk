@@ -182,6 +182,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PRODUCT_PROPERTIES += \
     debug.graphics.game_default_frame_rate.disabled=true
 
+# Pixel compatibility resources
+PRODUCT_COPY_FILES += \
+    vendor/lineage/config/permissions/privapp-permissions-ambientindication.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-ambientindication.xml \
+
 # Disable RescueParty due to high risk of data loss
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.disable_rescue=true
