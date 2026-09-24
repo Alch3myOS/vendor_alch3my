@@ -1,14 +1,14 @@
-# Allow vendor/extra to override any property by setting it first
-$(call inherit-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product-if-exists, vendor/lineage/config/lunaris.mk)
-$(call inherit-product-if-exists, vendor/extras/config.mk)
-$(call inherit-product-if-exists, vendor/extra/product.mk)
-$(call inherit-product-if-exists, vendor/fontbox/config.mk)
-$(call inherit-product-if-exists, vendor/certification/config.mk)
+PRODUCT_BRAND ?= Alch3myOS
 
-ifeq ($(WITH_BCR),true)
-$(call inherit-product, vendor/bcr/bcr.mk)
+ifeq ($(IS_PIXEL),true)
+# Pixel APN, Camera, & FaceUnlock
+$(call inherit-product, vendor/lineage/config/pixel.mk)
 endif
+
+# Allow vendor/..* to override any property by setting it first
+$(call inherit-product-if-exists, vendor/lineage/config/alch3my.mk)
+$(call inherit-product-if-exists, vendor/extras/config.mk)
+$(call inherit-product, vendor/bcr/bcr.mk)
 
 # Exclude repos from bp scanning
 PRODUCT_SOURCE_ROOT_DIRS += -kernel/platform
@@ -16,8 +16,6 @@ PRODUCT_SOURCE_ROOT_DIRS += -prebuilts/misc/protobuf_vendorcompat
 
 # Allow vendor prebuilt repos to exclude themselves from bp scanning
 -include $(sort $(wildcard vendor/*/*/exclude-bp.mk))
-
-PRODUCT_BRAND ?= LunarisAOSP
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -60,14 +58,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/bin/backuptool.sh:install/bin/backuptool.sh \
     vendor/lineage/prebuilt/common/bin/backuptool.functions:install/bin/backuptool.functions
-
-#ifeq ($(LINEAGE_BUILD),true)
-#PRODUCT_COPY_FILES += \
-#    vendor/lineage/prebuilt/common/bin/50-lineage.sh:$(TARGET_COPY_OUT_SYSTEM)/addon.d/50-lineage.sh
-
-#PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-#    system/addon.d/50-lineage.sh
-#endif
 
 ifneq ($(strip $(AB_OTA_PARTITIONS) $(AB_OTA_POSTINSTALL_CONFIG)),)
 PRODUCT_COPY_FILES += \
@@ -119,8 +109,8 @@ endif
 
 # Enable whole-program R8 Java optimizations for SystemUI and system_server,
 # but also allow explicit overriding for testing and development.
-SYSTEM_OPTIMIZE_JAVA ?= true
-SYSTEMUI_OPTIMIZE_JAVA ?= true
+SYSTEM_OPTIMIZE_JAVA := true
+SYSTEMUI_OPTIMIZE_JAVA := true
 
 # Disable vendor restrictions
 PRODUCT_RESTRICT_VENDOR_FILES := false
@@ -163,11 +153,6 @@ PRODUCT_COPY_FILES += \
 # Config
 PRODUCT_PACKAGES += \
     SimpleSettingsConfig
-
-ifneq ($(WITH_GMS), true)
-PRODUCT_PACKAGES += \
-    SimpleDeviceConfig
-endif
 
 # Disable default frame rate limit for games
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -260,8 +245,11 @@ endif
 # SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += \
     AppLocker \
+    Arcanium \
     CarSystemUI \
     GameSpace \
+    Launcher3 \
+    Launcher3QuickSteps \
     Settings \
     SystemUI
 
@@ -275,13 +263,6 @@ endif
 
 # Audio files
 $(call inherit-product, vendor/lineage/audio/audio.mk)
-
-# SetupWizard
-ifneq ($(WITH_GMS), true)
-PRODUCT_PRODUCT_PROPERTIES += \
-    setupwizard.theme=glif_expressive \
-    setupwizard.feature.day_night_mode_enabled=true
-endif
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay/no-rro
 PRODUCT_PACKAGE_OVERLAYS += \
@@ -311,42 +292,28 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 
 include vendor/lineage/config/version.mk
 
--include vendor/lineage-priv/keys/keys.mk
-
+# GMS
 ifeq ($(WITH_GMS),true)
+$(call inherit-product, vendor/gms/products/gms.mk)
 PRODUCT_PACKAGES += \
     SettingsOverlayPixelThemePicker \
     SettingsProviderOverlayGMS
-TARGET_CALL_RECORDING_SUPPORTED ?= true
-ifneq ($(TARGET_CALL_RECORDING_SUPPORTED),false)
 PRODUCT_COPY_FILES += \
     vendor/lineage/config/permissions/com.google.android.apps.dialer.call_recording_audio.features.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.apps.dialer.call_recording_audio.features.xml
-endif
-else
-PRODUCT_PACKAGES += \
-    SettingsOverlay \
-    SettingsProviderOverlayVanilla
-endif
-
--include $(WORKSPACE)/build_env/image-auto-bits.mk
--include vendor/lineage/config/partner_gms.mk
-
-# Singing keys
-ifeq ($(LUNARIS_BUILD_TYPE),OFFICIAL)
-    $(call inherit-product, vendor/lunaris-priv/keys/keys.mk)
-endif
-
-ifeq ($(WITH_GMS), true)
-PRODUCT_PRODUCT_PROPERTIES += \
-    persist.sys.with_google_apps=true
-
-# Pixel GMS
-$(call inherit-product, vendor/pixel/gms/products/gms.mk)
-$(call inherit-product, vendor/pixel/sounds/products/sounds.mk)
-$(call inherit-product, vendor/pixel/launcher/products/launcher.mk)
-$(call inherit-product, vendor/pixel/themepicker/products/themepicker.mk)
 else
 $(call inherit-product, vendor/prebuilts/prebuilts.mk)
+PRODUCT_PRODUCT_PROPERTIES += \
+    setupwizard.theme=glif_expressive \
+    setupwizard.feature.day_night_mode_enabled=true
+PRODUCT_PACKAGES += \
+    SettingsOverlay \
+    SettingsProviderOverlayVanilla \
+    SimpleDeviceConfig
+endif
+
+# Singing keys
+ifneq ($(filter OFFICIAL Official official,$(ALCH3MY_BUILD_TYPE)),)
+include vendor/lineage-priv/keys/keys.mk
 endif
 
 # Custom Overlays

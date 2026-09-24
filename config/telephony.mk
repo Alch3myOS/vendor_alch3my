@@ -1,11 +1,3 @@
-# GMS
-ifeq ($(WITH_GMS),true)
-WITH_GMS_COMMS_SUITE := true
-else
-PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.ringtone=Orion.ogg
-endif
-
 # Sensitive Phone Numbers list
 PRODUCT_PACKAGES += \
     sensitive_pn.xml
@@ -26,4 +18,4 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Disable mobile data by default
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.com.android.mobiledata=false
+    ro.com.android.mobiledata=true

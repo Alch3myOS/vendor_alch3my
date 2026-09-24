@@ -6,26 +6,16 @@ PRODUCT_SIZE := full
 PRODUCT_PACKAGES += \
     Profiles
 
-ifneq ($(WITH_GMS), true)  
 # Apps
+ifneq ($(WITH_GMS), true)  
 PRODUCT_PACKAGES += \
+    Aperture \
+    AudioFX \
     Camelot \
     Etar \
     Recorder \
     Seedvault \
     Twelve
-endif
-
-ifneq ($(PRODUCT_NO_CAMERA),true)
-PRODUCT_PACKAGES += \
-    Aperture
-endif
-
-ifneq ($(WITH_GMS), true)
-ifneq ($(TARGET_EXCLUDES_AUDIOFX),true)
-PRODUCT_PACKAGES += \
-    AudioFX
-endif
 endif
 
 # Extra cmdline tools

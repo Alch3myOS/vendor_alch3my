@@ -1034,4 +1034,13 @@ function generate_host_overrides() {
 
 generate_host_overrides
 
+export RELEASE_ENABLE_SAFETY_CENTER_NEW_UI=true
+
+######_ Read / Write Error Bypass
+export REPO_CONFIG=out/.repo_config
+
+# Java Memory R8/D8
+export ANDROID_JAVA_MAX_MEM="20G"
+export JAVA_ARGS="-Xmx8g"
+
 export USE_THINLTO_CACHE=true

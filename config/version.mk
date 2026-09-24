@@ -1,25 +1,29 @@
 PRODUCT_VERSION_MAJOR = 16
 PRODUCT_VERSION_MINOR = 0
 
-# Increase Lunaris Version with each major release.
-LUNARIS_VERSION := 3.12
-LUNARIS_BUILD_TYPE ?= Community
+# Increase Alch3my Version with each major release.
+ALCH3MY_VERSION := 1.1
+ALCH3MY_BUILD_TYPE ?= UNOFFICIAL
+LINEAGE_BUILD := $(DEVICE_CODENAME)
+BUILD_DATE := $(shell TZ="America/New_York" date +%Y%m%d)
+BUILD_TIME := $(shell TZ="America/New_York" date +%H%M)
 
 ifeq ($(WITH_GMS),true)
-LUNARIS_BUILD_VARIANT := GMS
+ALCH3MY_BUILD_VARIANT := GMS
 else
-LUNARIS_BUILD_VARIANT := VANILLA
+ALCH3MY_BUILD_VARIANT := VANILLA
 endif
 
 # Internal version
-LINEAGE_VERSION := Lunaris-AOSP-$(LINEAGE_BUILD)-$(LUNARIS_BUILD_TYPE)-$(LUNARIS_VERSION)-$(LUNARIS_BUILD_VARIANT)-$(shell date -u +%Y%m%d%H)
+LINEAGE_VERSION := Alch3myOS-$(ALCH3MY_VERSION)-$(LINEAGE_BUILD)-$(ALCH3MY_BUILD_VARIANT)-$(ALCH3MY_BUILD_TYPE)-$(BUILD_DATE)-$(BUILD_TIME)
 
 # Display version
-LINEAGE_DISPLAY_VERSION := v$(LUNARIS_VERSION)-$(shell date -u +%Y%m%d)
+LINEAGE_DISPLAY_VERSION := v$(ALCH3MY_VERSION)-$(shell date -u +%Y%m%d)
 
-# LineageOS version properties
+# Alch3myOS version properties
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.lunaris.build.version=$(LUNARIS_VERSION) \
-    ro.lunaris.display.version=$(LINEAGE_DISPLAY_VERSION) \
-    ro.lunaris.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
-    ro.lunaris.package.type=$(LUNARIS_BUILD_VARIANT)-$(LUNARIS_BUILD_TYPE)
+    ro.alch3my.build.version=$(ALCH3MY_VERSION) \
+    ro.alch3my.build=$(LINEAGE_VERSION) \
+    ro.alch3my.display.version=$(LINEAGE_DISPLAY_VERSION) \
+    ro.alch3my.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR) \
+    ro.alch3my.package.type=$(ALCH3MY_BUILD_VARIANT)-$(ALCH3MY_BUILD_TYPE)

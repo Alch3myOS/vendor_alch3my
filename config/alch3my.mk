@@ -1,3 +1,6 @@
+# Broken config
+PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
+
 # Additional props
 PRODUCT_PRODUCT_PROPERTIES += \
     dalvik.vm.debug.alloc=0 \
@@ -24,28 +27,18 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.input.video_enabled=false
 
 # Enable blur
-TARGET_ENABLE_BLUR ?= true
-ifeq ($(TARGET_ENABLE_BLUR),true)
-PRODUCT_SYSTEM_PROPERTIES += \
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
     ro.custom.blur.enable=true \
     persist.sysui.disableBlur=false \
     ro.surface_flinger.supports_background_blur=1
-else
-PRODUCT_SYSTEM_PROPERTIES += \
-    ro.custom.blur.enable=false \
-    persist.sysui.disableBlur=true \
-    ro.surface_flinger.supports_background_blur=0
-endif
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
     vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-crdroid-product.xml
 
 # ColumbusService
-ifneq ($(TARGET_SUPPORTS_QUICK_TAP),false)
 PRODUCT_PACKAGES += \
     ColumbusService
-endif
 
 # Use a generic profile based boot image by default
 PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
@@ -56,7 +49,11 @@ PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := \
     art/build/boot/boot-image-profile.txt
 
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
-    system/etc/preloaded-classes
+    system/etc/preloaded-classes \
+    system/fonts/RobotoFallback-VF.ttf \
+    system/priv-app/OmniStyle/OmniStyle.apk \
+    system/priv-app/MatLog/MatLog.apk \
+    system/priv-app/Alch3myFX/Alch3myFX.apk
 
 # Enable Material Design 3 Expressive
 PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
@@ -70,8 +67,8 @@ ART_BUILD_HOST_DEBUG := false
 ART_BUILD_TARGET_DEBUG := false
 
 ifeq ($(TARGET_BUILD_VARIANT),user)
-    PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
-    WITH_DEXPREOPT_DEBUG_INFO := false
+PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
+WITH_DEXPREOPT_DEBUG_INFO := false
 endif
 
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -90,43 +87,58 @@ USE_DEX2OAT_DEBUG := false
 OVERRIDE_DISABLE_DEXOPT_ALL := false
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
-TARGET_OPTIMIZED_DEXOPT ?= false
-ifeq ($(TARGET_OPTIMIZED_DEXOPT),true)
-    PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed-profile
-    PRODUCT_SYSTEM_PROPERTIES += \
-        pm.dexopt.post-boot=speed-profile \
-        pm.dexopt.first-boot=verify \
-        pm.dexopt.boot-after-ota=verify \
-        pm.dexopt.boot-after-mainline-update=verify \
-        pm.dexopt.install=speed-profile \
-        pm.dexopt.install-fast=speed-profile \
-        pm.dexopt.install-bulk=speed-profile \
-        pm.dexopt.install-bulk-secondary=speed \
-        pm.dexopt.install-bulk-downgraded=speed \
-        pm.dexopt.install-bulk-secondary-downgraded=speed \
-        pm.dexopt.bg-dexopt=speed \
-        pm.dexopt.ab-ota=speed-profile \
-        pm.dexopt.inactive=verify \
-        pm.dexopt.cmdline=speed \
-        pm.dexopt.first-use=speed-profile \
-        pm.dexopt.secondary=speed-profile \
-        pm.dexopt.shared=speed \
-        dalvik.vm.dex2oat-filter=speed \
-        dalvik.vm.image-dex2oat-filter=speed \
-        dalvik.vm.dex2oat-cpu-set=0,1,2,3,4,5,6 \
-        dalvik.vm.dex2oat-threads=6
+PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed-profile
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    pm.dexopt.post-boot=speed-profile \
+    pm.dexopt.first-boot=verify \
+    pm.dexopt.boot-after-ota=verify \
+    pm.dexopt.boot-after-mainline-update=verify \
+    pm.dexopt.install=speed-profile \
+    pm.dexopt.install-fast=speed-profile \
+    pm.dexopt.install-bulk=speed-profile \
+    pm.dexopt.install-bulk-secondary=speed \
+    pm.dexopt.install-bulk-downgraded=speed \
+    pm.dexopt.install-bulk-secondary-downgraded=speed \
+    pm.dexopt.bg-dexopt=speed \
+    pm.dexopt.ab-ota=speed-profile \
+    pm.dexopt.inactive=verify \
+    pm.dexopt.cmdline=speed \
+    pm.dexopt.first-use=speed-profile \
+    pm.dexopt.secondary=speed-profile \
+    pm.dexopt.shared=speed \
+    dalvik.vm.dex2oat-filter=speed \
+    dalvik.vm.image-dex2oat-filter=speed \
+    dalvik.vm.dex2oat-cpu-set=0,1,2,3,4,5,6 \
+    dalvik.vm.dex2oat-threads=6
 
-    PRODUCT_DEX_PREOPT_DEFAULT_FLAGS += \
+PRODUCT_DEX_PREOPT_DEFAULT_FLAGS += \
         --compiler-filter=speed-profile
 
-    $(call add-product-dex-preopt-module-config,services,--compiler-filter=speed)
-    $(call add-product-dex-preopt-module-config,wifi-service,--compiler-filter=speed)
-    $(call add-product-dex-preopt-module-config,framework,--compiler-filter=speed-profile)
+$(call add-product-dex-preopt-module-config,services,--compiler-filter=speed)
+$(call add-product-dex-preopt-module-config,wifi-service,--compiler-filter=speed)
+$(call add-product-dex-preopt-module-config,framework,--compiler-filter=speed-profile)
 
-endif
+PRODUCT_PACKAGES += \
+    MatLog
 
 # Extra packages
 PRODUCT_PACKAGES += \
+    Alch3myFX \
+    AppLocker \
+    AxQuickLook \
+    AxSandbox \
+    AxThemeStore \
+    BatteryStatsViewer \
+    GameSpace \
+    LMOFreeform \
+    LMOFreeformSidebar \
+    NOSAtmosphereEffect \
+    OmniJaws \
+    OmniStyle
+
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Alch3myFX \
+    AppLocker \
     AxQuickLook \
     AxSandbox \
     AxThemeStore \
@@ -138,11 +150,6 @@ PRODUCT_PACKAGES += \
     OmniStyle
 
 $(call inherit-product-if-exists, axion_sdk/ax_tflite/common.mk)
-
-ifneq ($(TARGET_DISABLE_MATLOG),true)
-PRODUCT_PACKAGES += \
-    MatLog
-endif
 
 ifneq ($(TARGET_FACE_UNLOCK_SUPPORTED),false)
 PRODUCT_PACKAGES += \
@@ -181,7 +188,7 @@ BYPASS_CHARGE_SUPPORTED ?= false
 HBM_SUPPORTED ?= false
 HBM_NODE ?= /sys/class/backlight/panel0-backlight/hbm_mode
 USE_REALITY_ENGINE ?= false
-USE_ADVANCED_DISPLAY_COLOR ?= false
+USE_ADVANCED_DISPLAY_COLOR := false
 
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.battery_bypass_supported=$(BYPASS_CHARGE_SUPPORTED) \
@@ -190,22 +197,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
     persist.display.color.advanced.enabled=$(USE_ADVANCED_DISPLAY_COLOR) \
     persist.sys.udfps.custom=$(TARGET_CUSTOM_UDFPS)
 
-# Quick Switch (Launcher3)
-WITH_PIXEL_LAUNCHER ?= true
-ifeq ($(WITH_GMS),true)
-    ifeq ($(WITH_PIXEL_LAUNCHER),true)
-        PRODUCT_SYSTEM_PROPERTIES += \
-            persist.sys.default_launcher=0 \
-            persist.sys.quickswitch_pixel_shipped=1
-    else
-        PRODUCT_SYSTEM_PROPERTIES += \
-            persist.sys.default_launcher=0 \
-            persist.sys.quickswitch_pixel_shipped=0
-    endif
-else
-    PRODUCT_SYSTEM_PROPERTIES += \
-        persist.sys.default_launcher=0
-endif
+# Quick Switch
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    persist.sys.default_launcher=1 \
+    persist.sys.quickswitch_pixel_shipped=1
 
 ifeq ($(SURFACE_FLINGER_BOOST),true)
 PRODUCT_PRODUCT_PROPERTIES += \

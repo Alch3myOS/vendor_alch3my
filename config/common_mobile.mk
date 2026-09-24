@@ -11,6 +11,7 @@ include vendor/lineage/config/lineage_audio.mk
 # Default notification/alarm sounds (non-GMS only)
 ifneq ($(WITH_GMS),true)
 PRODUCT_PRODUCT_PROPERTIES += \
+    ro.config.ringtone=Orion.ogg \
     ro.config.notification_sound=Argon.ogg \
     ro.config.alarm_alert=Hassium.ogg
 endif
