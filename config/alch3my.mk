@@ -1,10 +1,16 @@
 # Alch3myOS packages
 PRODUCT_PACKAGES += \
+    AppLocker \
+    AxQuickLook \
     AxSandbox \
+    AxThemeStore \
     BatteryStatsViewer \
     GameSpace \
     LMOFreeform \
-    LMOFreeformSidebar
+    LMOFreeformSidebar \
+    OmniJaws \
+    OmniStyle \
+    privapp-permissions-axquicklook
 
 # Additional props
 PRODUCT_PRODUCT_PROPERTIES += \
