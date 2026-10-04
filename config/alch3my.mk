@@ -87,7 +87,7 @@ PRODUCT_PRODUCT_PROPERTIES += is_expressive_design_enabled=true
 
 # Cloned app exemption
 PRODUCT_COPY_FILES += \
-    vendor/lineage/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml
+    vendor/alch3my/prebuilt/common/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/preinstalled-packages-platform-alch3my-product.xml
 
 # Use a generic profile based boot image by default
 PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
