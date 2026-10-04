@@ -84,7 +84,7 @@ PRODUCT_COPY_FILES += \
 
 # our sysconfig
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/derpfest-sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/derpfest-sysconfig.xml
+    vendor/alch3my/config/permissions/derpfest-sysconfig.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/derpfest-sysconfig.xml
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -184,7 +184,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Pixel compatibility resources
 PRODUCT_COPY_FILES += \
-    vendor/lineage/config/permissions/privapp-permissions-ambientindication.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-ambientindication.xml \
+    vendor/alch3my/config/permissions/privapp-permissions-ambientindication.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-ambientindication.xml \
 
 # Disable RescueParty due to high risk of data loss
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -341,7 +341,11 @@ CUSTOM_LOCALES += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/crowdin/overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/crowdin/overlay
 
+# Extra key recovery accepts OTAs from. Add your release certificate as
+# build/target/product/security/alch3my.x509.pem to use it.
+ifneq ($(wildcard vendor/alch3my/build/target/product/security/alch3my.x509.pem),)
 PRODUCT_EXTRA_RECOVERY_KEYS += \
     vendor/alch3my/build/target/product/security/alch3my
+endif
 
 include vendor/alch3my/config/version.mk
