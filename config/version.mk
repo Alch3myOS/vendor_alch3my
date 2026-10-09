@@ -4,7 +4,9 @@ PRODUCT_VERSION_MINOR = 0
 # Increase Alch3my Version with each major release.
 ALCH3MY_VERSION := 1.0
 ALCH3MY_BUILD_TYPE ?= UNOFFICIAL
+ifeq ($(WITH_GMS)|$(wildcard vendor/gms/products/gms.mk),true|vendor/gms/products/gms.mk)
 ALCH3MY_BUILD_VARIANT := GMS
+endif
 BUILD_DATE := $(shell TZ="America/New_York" date +%Y%m%d)
 BUILD_TIME := $(shell TZ="America/New_York" date +%H%M)
 

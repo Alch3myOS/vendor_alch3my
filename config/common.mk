@@ -5,6 +5,22 @@ ifeq ($(IS_PIXEL),true)
 $(call inherit-product, vendor/alch3my/config/pixel.mk)
 endif
 
+# Google apps (vendor/gms). Build without them with WITH_GMS=false.
+WITH_GMS ?= true
+ifeq ($(WITH_GMS),true)
+$(call inherit-product-if-exists, vendor/gms/products/gms.mk)
+
+# Pixel Settings and SystemUI (they replace Settings and SystemUI)
+ifneq ($(wildcard vendor/unbundled_google/packages/SettingsGoogle/Android.bp),)
+PRODUCT_PACKAGES += \
+    SettingsGoogle
+endif
+ifneq ($(wildcard vendor/unbundled_google/packages/SystemUIGoogle/Android.bp),)
+PRODUCT_PACKAGES += \
+    SystemUIGoogle
+endif
+endif
+
 # Allow vendor/..* to override any property by setting it first
 $(call inherit-product, vendor/alch3my/config/alch3my.mk)
 $(call inherit-product, vendor/extras/config.mk)
@@ -298,9 +314,11 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     Launcher3QuickStep \
     NexusLauncherRelease \
     Settings \
+    SettingsGoogle \
     CarSystemUI \
 	Arcanium \
-    SystemUI
+    SystemUI \
+    SystemUIGoogle
 
 PRODUCT_PRODUCT_PROPERTIES += \
     dalvik.vm.systemuicompilerfilter=speed
