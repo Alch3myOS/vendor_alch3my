@@ -594,18 +594,8 @@
 
     <bool name="config_enableNewAutoSelectNetworkUI">true</bool>
 
-    <bool name="config_enableBurnInProtection">true</bool>
-
     <dimen name="config_viewConfigurationTouchSlop">6dp</dimen>
 
     <!-- Flag indicating whether we should enable smart battery. -->
     <bool name="config_smart_battery_available">true</bool>
-
-    <!-- Assign roles to AiAi and exempt it from privacy indicators -->
-    <string name="config_systemAmbientAudioIntelligence">com.google.android.as</string>
-    <string name="config_systemAudioIntelligence">com.google.android.as</string>
-    <string name="config_systemNotificationIntelligence">com.google.android.as</string>
-    <string name="config_systemTextIntelligence">com.google.android.as</string>
-    <string name="config_systemUiIntelligence">com.google.android.as</string>
-    <string name="config_systemVisualIntelligence">com.google.android.as</string>
 </resources>
