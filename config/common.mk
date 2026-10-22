@@ -188,6 +188,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	LineageParts \
     LineageSettingsProvider \
+    Alch3mySetupWizard \
     Updater
 
 PRODUCT_COPY_FILES += \
