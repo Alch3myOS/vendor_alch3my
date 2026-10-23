@@ -1034,14 +1034,24 @@ function generate_host_overrides() {
 
 generate_host_overrides
 
+export USE_THINLTO_CACHE=true
+export SKIP_ABI_CHECKS=true
 export RELEASE_ENABLE_SAFETY_CENTER_NEW_UI=true
 
 ######_ Read / Write Error Bypass
 export REPO_CONFIG=out/.repo_config
 
-# Java Memory R8/D8
-export ANDROID_JAVA_MAX_MEM="20G"
-export JAVA_ARGS="-Xmx8g"
+# Apply memory and concurrency constraints only if "export ALCH3MY_LIMIT_MEM=true"
+if [ "$ALCH3MY_LIMIT_MEM" = "true" ]; then
+    echo "=> [Alch3my] Applying constrained host limits (<32gb Ram)..."
 
-export USE_THINLTO_CACHE=true
-export SKIP_ABI_CHECKS=true
+    # Java Memory R8/D8
+    export ANDROID_JAVA_MAX_MEM="8G"
+    export JAVA_ARGS="-Xmx8g"
+    # Go Runtime Constraints
+    export GOMEMLIMIT=14GiB
+    export GOGC=50
+    export GOMAXPROCS=8
+    # Siso Threads
+    export SISO_OPTS="-local_jobs 8"
+fi
