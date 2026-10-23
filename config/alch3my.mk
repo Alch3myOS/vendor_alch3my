@@ -126,6 +126,16 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
 PRODUCT_PRODUCT_PROPERTIES += \
     audio.safemedia.bypass=1
 
+# Bluetooth: don't use the controller's vendor LE extensions (hardware scan
+# filters and the like). On some firmware the controller never answers
+# LE_ADV_FILTER (0xfd57) and the stack aborts after the HCI timeout, taking
+# Bluetooth down. Filtering is done in software instead. Set
+# ALCH3MY_BT_VENDOR_LE_CAPS := true in the device tree to keep them.
+ifneq ($(ALCH3MY_BT_VENDOR_LE_CAPS),true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    bluetooth.core.le.vendor_capabilities.enabled=false
+endif
+
 # PERF_ANIM_OVERRIDE
 PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.activity_anim_perf_override=$(PERF_ANIM_OVERRIDE)
