@@ -1,0 +1,17 @@
+# Pixel 11 Pro
+
+# Updated semi-manually via pixel/update-any-var.sh
+
+readonly build_id="CD1A.261005.003"
+
+# Updated automatically via pixel/update-device-vars.sh
+
+readonly build_number="16262255"
+
+readonly image_url=""
+readonly image_sha256=""
+
+readonly flash_url="https://flash.android.com/build/16262255?target=grizzly-user&signed"
+
+readonly ota_url=""
+readonly ota_sha256=""
