@@ -129,7 +129,6 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 # Lineage SDK
 include vendor/alch3my/config/lineage_sdk_common.mk
-endif
 
 ART_BUILD_TARGET_NDEBUG := false
 ART_BUILD_TARGET_DEBUG := false
